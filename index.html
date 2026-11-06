@@ -60,6 +60,28 @@
 
         <h2>Productos registrados</h2>
         <ul id="lista"></ul>
+        <!-- Diseño de cada producto: conserva los atributos data-*. -->
+        <template id="plantilla-producto">
+            <li class="producto">
+                <span>
+                    <strong data-nombre></strong>
+                    | Precio: Bs <span data-precio></span>
+                    | Cantidad: <span data-cantidad></span>
+                    | Total: Bs <span data-total></span>
+                </span>
+                <button type="button" class="boton-eliminar" data-eliminar>Eliminar</button>
+            </li>
+        </template>
+
+        <dialog id="confirmar-eliminar" class="confirmacion"
+                aria-labelledby="titulo-eliminar" aria-describedby="detalle-eliminar">
+            <h2 id="titulo-eliminar">¿Estás seguro de eliminar este producto?</h2>
+            <p id="detalle-eliminar"></p>
+            <form method="dialog" class="botones">
+                <button value="cancelar" autofocus>Cancelar</button>
+                <button value="eliminar" class="boton-eliminar">Sí, eliminar</button>
+            </form>
+        </dialog>
 
         <p class="ayuda">
             Enter: registrar · Escape: limpiar.
@@ -69,3 +91,4 @@
     </main>
 </body>
 </html>
+
