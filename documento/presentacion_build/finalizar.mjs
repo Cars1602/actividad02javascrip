@@ -1,0 +1,5 @@
+import {finalizePresentation} from 'file:///C:/Users/Carlos/.codex/plugins/cache/openai-primary-runtime/presentations/26.1104.12130/skills/presentations/container_tools/artifact_tool_utils.mjs';
+const root='C:/universidad materias/diseno web 2/actividad02';
+const skill='C:/Users/Carlos/.codex/plugins/cache/openai-primary-runtime/presentations/26.1104.12130/skills/presentations';
+await finalizePresentation({workspaceDir:root,candidatePath:root+'/documento/presentacion_build/candidate.pptx',finalPath:root+'/documento/Presentacion_registro_productos.pptx',pythonExecutable:'C:/Program Files/WindowsApps/OpenAI.CodexPrimaryRuntime.v26-1104-1290-0_26.1104.1290.0_x64__3k8sg7r9htsxt/dependencies/python/python.exe',integrityValidatorPath:skill+'/container_tools/inspect_presentation_package_integrity.py',layoutValidatorPath:skill+'/container_tools/inspect_presentation_layout_geometry.py',layoutArgs:['--expected-slide-size-emu','12192000,6858000'],explicitTotalSlideCount:10,fontPolicy:{basis:'design',families:['Arial']},verifyArtifactToolImport:true,receiptPath:root+'/.presentacion-validation.json'});
+
