@@ -1,0 +1,147 @@
+/* Incluye bordes y relleno en el ancho de cada elemento. */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    color: #243247;
+    margin: 0;
+    padding: 24px;
+}
+
+main {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px #00000012;
+}
+
+h1 {
+    color: #185b95;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #aab7c4;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: 2px solid #287bc1;
+    outline-offset: 2px;
+}
+
+/* JavaScript activa este atributo cuando encuentra un error. */
+input[aria-invalid="true"] {
+    border-color: #c62828;
+    background: #fff7f7;
+}
+
+.error {
+    display: block;
+    min-height: 18px;
+    margin-top: 5px;
+    color: #c62828;
+}
+
+.botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+button {
+    padding: 12px 20px;
+    background: #185b95;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #10416c;
+}
+
+button:focus-visible {
+    outline: 3px solid #287bc1;
+    outline-offset: 3px;
+}
+
+#limpiar {
+    background: #526477;
+}
+
+#mensaje {
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 14px;
+    margin-bottom: 10px;
+    background: #eef5fc;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+.ayuda {
+    color: #596879;
+    font-size: 14px;
+    line-height: 1.6;
+}
+/* Distribuye los datos y el botón de cada producto. */
+.producto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.producto span {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Apariencia del botón Eliminar. */
+.boton-eliminar {
+    background: #b42332;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.boton-eliminar:hover {
+    background: #8e1b27;
+}
+.confirmacion {
+    border: none;
+    border-radius: 16px;
+    padding: 28px;
+    width: min(440px, calc(100% - 32px));
+    color: #243247;
+    box-shadow: 0 12px 40px #00000030;
+}
+.confirmacion::backdrop { background: #14243899; }
+.confirmacion h2 { margin-top: 0; font-size: 22px; }
+.confirmacion p { overflow-wrap: anywhere; }
+.confirmacion button[value="cancelar"] { background: #526477; }
