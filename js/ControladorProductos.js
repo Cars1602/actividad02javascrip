@@ -1,7 +1,6 @@
 import { solicitar, convertir } from './ApiProductos.js';
 // import trae clases exportadas por otros archivos.
 // ./ significa que el archivo está en la misma carpeta.
-import { Producto } from "./Producto.js";
 import { ValidadorProducto } from "./ValidadorProducto.js";
 
 export class ControladorProductos {
@@ -145,7 +144,7 @@ export class ControladorProductos {
         boton.disabled = true;
         try {
             const datos = await solicitar('', {
-                method: 'POST', headers: {'Content-Type':'application/json'},
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(this.obtenerDatos())
             });
             const producto = convertir(datos);
@@ -156,72 +155,33 @@ export class ControladorProductos {
         } catch (error) { this.mensaje.textContent = error.message; }
         finally { this.guardando = false; boton.disabled = false; }
     }
-    // Agrega un producto a la lista visible.
-        mostrarProducto(producto) {
-        const elemento = document.createElement("li");
-        elemento.className = "producto";
+    // Copia el diseño del HTML y coloca los datos del producto.
+    mostrarProducto(producto) {
+        const plantilla = document.getElementById('plantilla-producto');
+        const elemento = plantilla.content.firstElementChild.cloneNode(true);
 
-        // Creamos un espacio para mostrar los datos.
-        const texto = document.createElement("span");
+        elemento.querySelector('[data-nombre]').textContent = producto.nombre;
+        elemento.querySelector('[data-precio]').textContent = producto.precio.toFixed(2);
+        elemento.querySelector('[data-cantidad]').textContent = producto.cantidad;
+        elemento.querySelector('[data-total]').textContent = producto.calcularTotal().toFixed(2);
 
-        texto.textContent =
-            producto.nombre +
-            " | Precio: Bs " + producto.precio.toFixed(2) +
-            " | Cantidad: " + producto.cantidad +
-            " | Total: Bs " + producto.calcularTotal().toFixed(2);
-
-        // Creamos un botón para este producto.
-        const botonEliminar = document.createElement("button");
-        botonEliminar.type = "button";
-        botonEliminar.textContent = "Eliminar";
-        botonEliminar.className = "boton-eliminar";
-        botonEliminar.setAttribute(
-            "aria-label",
-            "Eliminar producto " + producto.nombre
-        );
-
-        // Al hacer clic, eliminamos este producto y su fila.
-        botonEliminar.addEventListener("click", () => {
-            this.eliminarProducto(producto, elemento);
-        });
-
-        // Colocamos el texto y el botón dentro de la fila.
-        elemento.append(texto, botonEliminar);
-
-        // Agregamos la fila a la lista visible.
+        const boton = elemento.querySelector('[data-eliminar]');
+        boton.setAttribute('aria-label', boton.textContent + ' ' + producto.nombre);
+        boton.addEventListener('click', () => this.eliminarProducto(producto, elemento));
         this.lista.appendChild(elemento);
     }
+
+    // El cuadro y sus botones están escritos en index.html.
     confirmarEliminacion(producto) {
-        const dialogo = document.createElement('dialog');
-        dialogo.className = 'confirmacion';
-        dialogo.setAttribute('aria-labelledby', 'titulo-eliminar');
-        dialogo.setAttribute('aria-describedby', 'detalle-eliminar');
-        const titulo = document.createElement('h2');
-        titulo.id = 'titulo-eliminar';
-        titulo.textContent = '¿Estás seguro de eliminar este producto?';
-        const detalle = document.createElement('p');
-        detalle.id = 'detalle-eliminar';
-        detalle.textContent = producto.nombre;
-        const formulario = document.createElement('form');
-        formulario.method = 'dialog';
-        formulario.className = 'botones';
-        const cancelar = document.createElement('button');
-        cancelar.value = 'cancelar';
-        cancelar.textContent = 'Cancelar';
-        cancelar.autofocus = true;
-        const confirmar = document.createElement('button');
-        confirmar.value = 'eliminar';
-        confirmar.textContent = 'Sí, eliminar';
-        confirmar.className = 'boton-eliminar';
-        formulario.append(cancelar, confirmar);
-        dialogo.append(titulo, detalle, formulario);
-        document.body.append(dialogo);
+        const dialogo = document.getElementById('confirmar-eliminar');
+        if (dialogo.open) return Promise.resolve(false);
+        document.getElementById('detalle-eliminar').textContent = producto.nombre;
+        dialogo.returnValue = 'cancelar';
+
         return new Promise(resolve => {
             dialogo.addEventListener('close', () => {
-                const aceptado = dialogo.returnValue === 'eliminar';
-                dialogo.remove();
-                resolve(aceptado);
-            }, {once: true});
+                resolve(dialogo.returnValue === 'eliminar');
+            }, { once: true });
             dialogo.showModal();
         });
     }
@@ -231,7 +191,7 @@ export class ControladorProductos {
         const boton = elemento.querySelector('button');
         boton.disabled = true;
         try {
-            await solicitar('/' + producto.id, {method:'DELETE'});
+            await solicitar('/' + producto.id, { method: 'DELETE' });
             this.productos = this.productos.filter(item => item.id !== producto.id);
             elemento.remove();
             this.mensaje.textContent = 'Producto eliminado de Neon.';

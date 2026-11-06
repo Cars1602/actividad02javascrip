@@ -24,9 +24,11 @@ app.delete('/api/productos/:id', async (req, res) => {
 // Solo se publican los archivos de la interfaz; .env permanece privado.
 app.get('/', (req, res) => res.sendFile(fileURLToPath(new URL('./index.html', import.meta.url))));
 app.get('/estilos.css', (req, res) => res.sendFile(fileURLToPath(new URL('./estilos.css', import.meta.url))));
+app.use('/img', express.static(fileURLToPath(new URL('./img', import.meta.url))));
 app.use('/js', express.static(fileURLToPath(new URL('./js', import.meta.url))));
 try {
     await pool.query(await readFile(new URL('./schema.sql', import.meta.url), 'utf8'));
     app.listen(Number(process.env.PORT) || 3000, '0.0.0.0', () => console.log('Formulario disponible en http://localhost:3000'));
 } catch { console.error('No se pudo iniciar: comprueba la conexión de Neon en .env.'); await pool.end(); process.exitCode = 1; }
+
 

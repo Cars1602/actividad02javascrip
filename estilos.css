@@ -118,7 +118,7 @@ li {
     gap: 12px;
 }
 
-.producto span {
+.producto > span {
     flex: 1;
     min-width: 0;
 }
